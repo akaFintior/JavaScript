@@ -1,5 +1,6 @@
 var $block = document.getElementById('block');
 var $table = document.createElement('table');
+var letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
 for (var i = 0; i <= 9; i++) {
     var $row = document.createElement('tr');
@@ -9,32 +10,7 @@ for (var i = 0; i <= 9; i++) {
 
         if ((i == 0) || (i == 9)) {
             if ((j !== 0) && (j !== 9)) {
-                switch (j) {
-                    case 1:
-                        $cell.textContent = 'A';
-                        break;
-                    case 2:
-                        $cell.textContent = 'B';
-                        break;
-                    case 3:
-                        $cell.textContent = 'C';
-                        break;
-                    case 4:
-                        $cell.textContent = 'D';
-                        break;
-                    case 5:
-                        $cell.textContent = 'E';
-                        break;
-                    case 6:
-                        $cell.textContent = 'F';
-                        break;
-                    case 7:
-                        $cell.textContent = 'G';
-                        break;
-                    case 8:
-                        $cell.textContent = 'H';
-                        break;
-                }
+                $cell.textContent = letters[j-1];
             }
         } else {
             if ((j == 0) || (j == 9)) {

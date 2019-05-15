@@ -30,9 +30,14 @@ function countBasketPrice(basketItems){
 var $catalog = document.getElementById('catalog');
 var $list = document.createElement('ul');
 
-for (var i = 0; i < itemsInBasket.length; i++){
+var products = [p1, p2, p3, new Product('pants', 50), new Product('gloves', 100)];
+
+for (var i = 0; i < products.length; i++){
     var $li = document.createElement('li');
-    $li.textContent = itemsInBasket[i].name + ' ' + itemsInBasket[i].price + '$';
+    var $a = document.createElement('a');
+    $a.textContent = products[i].name + ' ' + products[i].price + '$';
+    $a.setAttribute('href', '#');
+    $li.appendChild($a);
     $list.appendChild($li);
 }
 $catalog.appendChild($list);
