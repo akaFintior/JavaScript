@@ -10,7 +10,7 @@ for (var i = 0; i <= 9; i++) {
 
         if ((i == 0) || (i == 9)) {
             if ((j !== 0) && (j !== 9)) {
-                $cell.textContent = letters[j-1];
+                $cell.textContent = letters[j - 1];
             }
         } else {
             if ((j == 0) || (j == 9)) {
