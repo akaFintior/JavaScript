@@ -8,7 +8,7 @@ for (var i = 0; i <= 9; i++) {
     for (var j = 0; j <= 9; j++) {
         var $cell = document.createElement('td'); 
 
-        if ((i == 0) || (i == 9)) {
+        if ((i === 0) || (i === 9)) {
             if ((j !== 0) && (j !== 9)) {
                 $cell.textContent = letters[j - 1];
             }
