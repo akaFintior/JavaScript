@@ -4,6 +4,10 @@ function addToCartButton(event) {
         var price = parseInt(event.target.previousSibling.textContent.match(/\d+/));
         countBasketPrice(price);
     };
+ /*   if (event.target.nodeName === "A") {
+        var $images = document.querySelector('.images');        в модальном окне картинки должны соответствовать нажатию мыши
+        for (var i = 0; i < images)
+    }    */
 }
 
 var totalItems = 0, totalPrice = 0;
@@ -17,9 +21,11 @@ var $basket = document.querySelector('#basket');
 $basket.textContent = 'Basket is empty';
 
 function init() {
-    function Product(name, price){
+    function Product(name, price, src1hq, src2hq, src1lq, src2lq){
         this.name = name;
         this.price = price;
+        this.imageHQ = [src1hq, src2hq];
+        this.imageLQ = [src1lq, src2lq];
     }
 
     var products = [];
@@ -35,7 +41,7 @@ function init() {
         var $li = document.createElement('li');
         var $a = document.createElement('a');
         $a.textContent = products[i].name + ' ' + products[i].price + '$';
-        $a.setAttribute('href', '#');
+        $a.setAttribute('href', '#modal');
         $li.appendChild($a);
         var $button = document.createElement('button');
         $button.textContent = 'Add to cart';
