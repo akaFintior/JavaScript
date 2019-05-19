@@ -2,14 +2,30 @@ a {
     text-decoration: none;
     color: #000;
     width: 200px;
+    cursor: pointer;
 }
 li {
     width: 350px;
-    height: 30px;
+    height: 50px;
     margin: 10px;
     list-style-type: none;
     display: flex;
     justify-content: space-around;
+    line-height: 50px;
+}
+.preview {
+    margin: 0 auto;
+    width: 500px;
+    height: 500px;
+}
+.thumbnails {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    width: 100vh;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
 }
 #basket {
     display: flex;
