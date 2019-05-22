@@ -30,6 +30,7 @@ li {
 #basket {
     display: flex;
     justify-content: flex-end;
+    cursor: pointer;
 }
 .modal {
     background: #fff;
