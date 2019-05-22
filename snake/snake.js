@@ -64,39 +64,25 @@ function isSnakeUnit(unit) {
 function move() {
   switch(direction) {
     case 'top':
-      snakeCoordY--;
+      snakeCoordY === 0 ? snakeCoordY = 19 : snakeCoordY--;
       break;
     case 'bottom':
-      snakeCoordY++;
+      snakeCoordY === 19 ? snakeCoordY = 0 : snakeCoordY++;
       break;
     case 'left':
-      snakeCoordX--;
+      snakeCoordX === 0 ? snakeCoordX = 19 : snakeCoordX--;
       break;
     case 'right':
-      snakeCoordX++;
+      snakeCoordX === 19 ? snakeCoordX = 0 : snakeCoordX++;
       break;
   }
-                                                                                          // нерабочий вариант
-  var $newUnit = $gameTable.children[snakeCoordY].children[snakeCoordX];
-  
-  if (!inBounds()) {
-    if (snakeCoordX === (SIZE.WIDTH - 1) && direction === 'right') {
-      $newUnit = $gameTable.children[snakeCoordY].children[0];
-      snake.push($newUnit);
-      if (!isFood($newUnit)) {
-        var $snakeRemoved = snake.shift();
-        $snakeRemoved.classList.remove('snake-unit');
-      }
-    }
-    if (snakeCoordX === 0 && direction === 'left') $newUnit = $gameTable.children[snakeCoordY].children[SIZE.WIDTH - 1];
-    if (snakeCoordY === 0 && direction === 'top') $newUnit = $gameTable.children[0].children[snakeCoordX];
-    if (snakeCoordY === (SIZE.HEIGHT - 1) && direction === 'bottom') $newUnit = $gameTable.children[SIZE.HEIGHT - 1].children[snakeCoordX];
-  }
 
+  
+  var $newUnit = $gameTable.children[snakeCoordY].children[snakeCoordX];
   if(!isSnakeUnit($newUnit)) {
     $newUnit.classList.add('snake-unit');
     snake.push($newUnit);
-    console.log(snake + ' ' + snakeCoordX + ' ' + snakeCoordY + ' ' + direction);
+    console.log(' ' + snakeCoordX + ' ' + snakeCoordY + ' ' + direction);
     if(!isFood($newUnit)) {
       var $snakeRemoved = snake.shift();
       $snakeRemoved.classList.remove('snake-unit');

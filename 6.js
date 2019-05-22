@@ -8,6 +8,7 @@ function addToCartButton(event) {
         $thumbnails.innerHTML = "";
         $preview.innerHTML = "";
         $thumbnails.addEventListener('click', handleThumbnailsClick);
+        window.addEventListener('keydown', handleModalKeyDown);
 
         var item = event.target.textContent.split(' ')[0];
         for (var i = 0; i < products.length; i++) {
@@ -24,6 +25,23 @@ function addToCartButton(event) {
                 }
             }
         }
+    }
+}
+
+function handleModalKeyDown(event) {
+    if (event.code === 'ArrowRight') {
+        $preview.innerHTML = "";
+        var imagePath = $thumbnails.lastChild.firstChild.dataset.original;
+        $img = document.createElement('img');
+        $img.src = imagePath;
+        $preview.appendChild($img);
+    }
+    if (event.code === 'ArrowLeft') {
+        $preview.innerHTML = "";
+        var imagePath = $thumbnails.firstChild.firstChild.dataset.original;
+        $img = document.createElement('img');
+        $img.src = imagePath;
+        $preview.appendChild($img);
     }
 }
 
