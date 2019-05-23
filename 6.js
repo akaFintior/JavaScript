@@ -1,6 +1,5 @@
 function addToCartButton(event) {
-    console.log(basket);
-    $basket.addEventListener('click', showBasketContent);
+    $next.addEventListener('click', showBasketContent);
     if (event.target.tagName === "BUTTON") {
         var item = event.target.previousSibling.textContent.split(' ')[0];
         for (var i = 0; i < products.length; i++) {
@@ -50,6 +49,9 @@ function handleModalKeyDown(event) {
     }
 }
 function showBasketContent(event) {
+    $catalog.setAttribute('class', 'hidden');
+    event.target.setAttribute('class', 'hidden');
+    $delivery.previousElementSibling.classList.remove('hidden');
     $basket.innerHTML = '';
     var $list = document.createElement('ul');
     $list.addEventListener('click', handleItemRemove);
@@ -64,11 +66,24 @@ function showBasketContent(event) {
         $list.appendChild($li);
     }
     $basket.appendChild($list);
+    $next1.addEventListener('click', showDeliveryOptions);
+}
 
+function showDeliveryOptions(event) {
+    $basket.setAttribute('class', 'hidden');
+    event.target.setAttribute('class', 'hidden');
+    $delivery.classList.remove('hidden');
+    $comment.previousElementSibling.classList.remove('hidden');
+    $next2.addEventListener('click', showComments);
+}
+
+function showComments(event) {
+    event.target.setAttribute('class', 'hidden');
+    $delivery.setAttribute('class', 'hidden');
+    $comment.classList.remove('hidden');
 }
 
 function handleItemRemove(event) {
-    console.log(totalItems);
     if (event.target.tagName === 'BUTTON') {
         $basketTotal.innerHTML = '';
         for (var i = 0; i < basket.length; i++) {
@@ -103,6 +118,12 @@ function countBasketPrice(item){
 return (totalItems === 0) ? $basket.textContent = 'Basket is empty' : $basket.textContent = totalItems + '  items in basket for ' + totalPrice + '$';
 }
 
+var $comment = document.querySelector('#comment');
+var $delivery = document.querySelector('#delivery-adress');
+var $catalog = document.querySelector('#catalog');
+var $next = document.querySelector('.next');
+var $next1 = document.querySelector('.next_1');
+var $next2 = document.querySelector('.next_2');
 var $basketTotal = document.createElement('div');
 var $thumbnails = document.querySelector('#thumbnails');
 var $preview = document.querySelector('#preview');
