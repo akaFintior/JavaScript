@@ -1,13 +1,18 @@
 function addToCartButton(event) {
-    console.log(event.target.textContent);
+    $next.addEventListener('click', showBasketContent);
     if (event.target.tagName === "BUTTON") {
-        var price = parseInt(event.target.previousSibling.textContent.match(/\d+/));
-        countBasketPrice(price);
-    };
+        var item = event.target.previousSibling.textContent.split(' ')[0];
+        for (var i = 0; i < products.length; i++) {
+            if (products[i].name === item) {
+                countBasketPrice(products[i]);
+            }
+        }
+    }
     if (event.target.tagName === "A") {
         $thumbnails.innerHTML = "";
         $preview.innerHTML = "";
         $thumbnails.addEventListener('click', handleThumbnailsClick);
+        window.addEventListener('keydown', handleModalKeyDown);
 
         var item = event.target.textContent.split(' ')[0];
         for (var i = 0; i < products.length; i++) {
@@ -27,6 +32,71 @@ function addToCartButton(event) {
     }
 }
 
+function handleModalKeyDown(event) {
+    if (event.code === 'ArrowRight') {
+        $preview.innerHTML = "";
+        var imagePath = $thumbnails.lastChild.firstChild.dataset.original;
+        $img = document.createElement('img');
+        $img.src = imagePath;
+        $preview.appendChild($img);
+    }
+    if (event.code === 'ArrowLeft') {
+        $preview.innerHTML = "";
+        var imagePath = $thumbnails.firstChild.firstChild.dataset.original;
+        $img = document.createElement('img');
+        $img.src = imagePath;
+        $preview.appendChild($img);
+    }
+}
+function showBasketContent(event) {
+    $catalog.setAttribute('class', 'hidden');
+    event.target.setAttribute('class', 'hidden');
+    $delivery.previousElementSibling.classList.remove('hidden');
+    $basket.innerHTML = '';
+    var $list = document.createElement('ul');
+    $list.addEventListener('click', handleItemRemove);
+    $basket.removeEventListener('click', showBasketContent);
+    
+    for (var i = 0; i < basket.length; i++) {
+        var $li = document.createElement('li');
+        $li.textContent = basket[i].quantity + ' ' + basket[i].name + ' ' + basket[i].price * basket[i].quantity;
+        var $button = document.createElement('button');
+        $button.textContent = 'remove item';
+        $li.appendChild($button);
+        $list.appendChild($li);
+    }
+    $basket.appendChild($list);
+    $next1.addEventListener('click', showDeliveryOptions);
+}
+
+function showDeliveryOptions(event) {
+    $basket.setAttribute('class', 'hidden');
+    event.target.setAttribute('class', 'hidden');
+    $delivery.classList.remove('hidden');
+    $comment.previousElementSibling.classList.remove('hidden');
+    $next2.addEventListener('click', showComments);
+}
+
+function showComments(event) {
+    event.target.setAttribute('class', 'hidden');
+    $delivery.setAttribute('class', 'hidden');
+    $comment.classList.remove('hidden');
+}
+
+function handleItemRemove(event) {
+    if (event.target.tagName === 'BUTTON') {
+        $basketTotal.innerHTML = '';
+        for (var i = 0; i < basket.length; i++) {
+            if (event.target.parentNode.firstChild.textContent.split(' ')[1] === basket[i].name) {
+                basket[i].quantity > 0 ? (basket[i].quantity-- && (totalPrice -= basket[i].price) && totalItems--) : event.target.parentNode.parentNode.removeChild(event.target.parentNode);
+                event.target.parentNode.firstChild.textContent = basket[i].quantity + ' ' + basket[i].name + ' ' + basket[i].price * basket[i].quantity;  
+                $basketTotal.textContent = (totalItems === 0) ? 'Basket is empty' : totalItems + '  items in basket for ' + totalPrice + '$';            
+            }
+        }
+        $basket.appendChild($basketTotal);
+    }
+}
+
 function handleThumbnailsClick(event) {
     if (event.target.tagName === 'IMG') {
         $preview.innerHTML = "";
@@ -38,12 +108,23 @@ function handleThumbnailsClick(event) {
 }
 
 var totalItems = 0, totalPrice = 0;
-function countBasketPrice(itemPrice){
+var basket = [];
+function countBasketPrice(item){
+    if (basket.includes(item)) {
+        item.quantity++
+    } else basket.push(item);
     totalItems++;
-    totalPrice += itemPrice;
-return $basket.textContent = totalItems + '  items in basket for ' + totalPrice + '$';
+    totalPrice += item.price;
+return (totalItems === 0) ? $basket.textContent = 'Basket is empty' : $basket.textContent = totalItems + '  items in basket for ' + totalPrice + '$';
 }
 
+var $comment = document.querySelector('#comment');
+var $delivery = document.querySelector('#delivery-adress');
+var $catalog = document.querySelector('#catalog');
+var $next = document.querySelector('.next');
+var $next1 = document.querySelector('.next_1');
+var $next2 = document.querySelector('.next_2');
+var $basketTotal = document.createElement('div');
 var $thumbnails = document.querySelector('#thumbnails');
 var $preview = document.querySelector('#preview');
 var $basket = document.querySelector('#basket');
@@ -52,6 +133,7 @@ $basket.textContent = 'Basket is empty';
 function Product(name, price, imglq1, imglq2, imghq1, imghq2){
     this.name = name;
     this.price = price;
+    this.quantity = 1;
     this.images = [ 
         {
         thumbnail: imglq1,
@@ -90,6 +172,7 @@ function init() {
     $catalog.appendChild($list);
 
     $list.addEventListener('click', addToCartButton);
+
     
 }
 

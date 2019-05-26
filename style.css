@@ -27,10 +27,6 @@ li {
     padding: 0;
     cursor: pointer;
 }
-#basket {
-    display: flex;
-    justify-content: flex-end;
-}
 .modal {
     background: #fff;
     left: 50%;
@@ -75,4 +71,7 @@ li {
 }
 .modal .btn {
     float: right;
+}
+.hidden {
+    display: none;
 }
