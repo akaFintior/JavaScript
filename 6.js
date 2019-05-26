@@ -90,7 +90,7 @@ function handleItemRemove(event) {
             if (event.target.parentNode.firstChild.textContent.split(' ')[1] === basket[i].name) {
                 basket[i].quantity > 0 ? (basket[i].quantity-- && (totalPrice -= basket[i].price) && totalItems--) : event.target.parentNode.parentNode.removeChild(event.target.parentNode);
                 event.target.parentNode.firstChild.textContent = basket[i].quantity + ' ' + basket[i].name + ' ' + basket[i].price * basket[i].quantity;  
-                (totalItems === 0) ? $basketTotal.textContent = 'Basket is empty' : $basketTotal.textContent = totalItems + '  items in basket for ' + totalPrice + '$';            
+                $basketTotal.textContent = (totalItems === 0) ? 'Basket is empty' : totalItems + '  items in basket for ' + totalPrice + '$';            
             }
         }
         $basket.appendChild($basketTotal);
